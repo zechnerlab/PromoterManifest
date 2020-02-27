@@ -42,6 +42,11 @@ for l=1:30
     params.k = 0.01;
     rates{1}.Params = params;
     
+    rates{5}.Fun = @(t, u, params) params.k;
+    rates{5}.Idx = [2, 1];
+    params.k = 0.01;
+    rates{5}.Params = params;
+    
     rates{2}.Fun = @(t, u, params) params.k * (1 - u^params.n / (params.V0^params.n + u^params.n));
     rates{2}.Idx = [2, 3];
     params.k = 0.01;
@@ -49,8 +54,8 @@ for l=1:30
     params.V0 = 0.5;
     rates{2}.Params = params;
     
-    rates{3}.Fun = @(t, u, params) params.k * (1 - u^params.n / (params.V0^params.n + u^params.n));
-    rates{3}.Idx = [3, 1];
+    rates{3}.Fun = @(t, u, params) params.k * (u^params.n / (params.V0^params.n + u^params.n));
+    rates{3}.Idx = [3, 2];
     params.k = 0.01;
     params.n = 2;
     params.V0 = 0.001;
@@ -64,7 +69,7 @@ for l=1:30
     rates{4}.Params = params;
     
     rates{5}.Fun = @(t, u, params) params.k;
-    rates{5}.Idx = [4, 2];
+    rates{5}.Idx = [4, 1];
     params.k = 0.01;
     rates{5}.Params = params;
     
@@ -85,11 +90,15 @@ for l=1:30
     meanTr = config.Z*P';
     varTr = config.Z.^2*P' - meanTr.^2;
     
+    
     meanR = sum(condM, 2);
     varR = sum(condS, 2) - meanR.^2;
     
     
     transcrOutput(l) = sum(meanTr(1:end-1).*dT);
+    
+    meanTrI = config.Z.*P;
+    transcrOutputI(l, :) = sum(meanTrI(1:end-1, :).*dT');
     
     if (condition.PulseParameters(1) == 1)
        concIdx = find(concVec == condition.Concentration);
@@ -109,9 +118,10 @@ for l=1:30
     
     %plot(measureGrid, meanR, measureGrid, meanR - sqrt(varR), measureGrid, meanR + sqrt(varR)); hold on;
     subplot(numRows, numCols, l);
-    %heatmap(QNet, 'CellLabelColor', 'none', 'GridVisible', 'off', 'ColorbarVisible', 'off');
-    image(QNet);
+    heatmap(QNet, 'CellLabelColor', 'none', 'GridVisible', 'off', 'ColorbarVisible', 'off');
     title(condition.Name);
+    
+    %image(QNet);
 end
 
 %loglog(PulseTr, PulseTrVar./PulseTr.^2, 'o');
