@@ -13,13 +13,15 @@ maxCond = 8;
 
 legendStr = {};
 cVec = [100, 275, 690, 3000];
-plVec = [50];
+plVec = [30];
 
 conditions = GenerateConditions();
 
 colVec = GetDefaultColors();
+colVec = flipud(colVec);
 
-selPromoters = {'DCS2', 'DDR2', 'TKL2', 'SIP18'};
+selPromoters = {'DCS2', 'DDR2', 'TKL2', 'SIP18', 'pSIP18_mut21'};
+selPromoters = {'pSIP18_mut21'};
 
 for i=1:length(selPromoters)
     
@@ -41,9 +43,11 @@ for i=1:length(selPromoters)
         results = load(['../StateReconstruction/results/StateReconstruction_' conditions{u}.Name '.mat'], 'Promoters');
         
         responders = and(results.Promoters{k}.PActivated>0.99, results.Promoters{k}.Valid);
-        idx = find(responders);%find(results.Promoters{k}.Valid);
+        %idx = find(responders);%find(results.Promoters{k}.Valid);
         idx = find(results.Promoters{k}.Valid);
 
+        results.Promoters{k}.Model.Z
+        
         [~, maxZIdx] = min(results.Promoters{k}.Model.Z(2:3));
         maxZIdx = maxZIdx + 1;
         meanTauTot{concIdx, plIdx} = sum(results.Promoters{k}.MeanTauState(idx, [2, 3]), 2);
@@ -56,7 +60,7 @@ for i=1:length(selPromoters)
     numConc = size(meanTauTot, 1);
     numPL = size(meanTauTot, 2);
     
-    for u=numConc:-1:1
+    for u=1:numConc
         
         meanTauTotVec = [];
         meanTranscrOutputVec = [];
@@ -88,6 +92,7 @@ for i=1:length(selPromoters)
         figure(3);
         subplot(3, length(selPromoters), i);
         p = scatter(meanTauTotVec(rdIdx)/60, meanTranscrOutputVec(rdIdx), 'o'); hold on;
+        pVec(u) = p;
         xlabel('Time active');
         ylabel('Transcr. output');
         set(p, 'SizeData', 15);
@@ -110,6 +115,10 @@ for i=1:length(selPromoters)
         ylabel('Slope');
         
         drawnow;
+    end
+    
+    for u=numConc:-1:1
+       uistack(pVec(u), 'top'); 
     end
 end
     

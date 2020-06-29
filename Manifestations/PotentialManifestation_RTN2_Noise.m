@@ -29,14 +29,14 @@ figure;
 
 %k=find(strcmp(promoters, 'pSIP18_mut21'));
 
-selPromoters = {'DCS2', 'TKL2', 'SIP18', 'RTN2', 'ALD3', 'pSIP18_mut6', 'pSIP18_mut21'};
+selPromoters = {'RTN2'};
 %selPromoters = {'SIP18'};
 %selPromoters = promoters;
 count = 1;
 
 actThreshold = 0;
 
-for u=1:30
+for u=1:20
     
     
     
@@ -54,20 +54,17 @@ for u=1:30
     for i=1:length(selPromoters)
         k = find(strcmp(promoters, selPromoters{i}));
         responders = and(results.Promoters{k}.PActivated>0.99, results.Promoters{k}.Valid);
-        transcrOutput = results.Promoters{k}.MeanTauState(find(responders), :)*results.Promoters{k}.Model.Z';
-        transcrOutput = results.Promoters{k}.MeanTrOutput(find(responders));
         transcrOutput = results.Promoters{k}.MeanTrOutput(find(results.Promoters{k}.Valid));
-        
         
         
         Y = [];
         count = 1;
         for j=1:length(results.Promoters{k}.Valid)
             if results.Promoters{k}.Valid(j)==1
-            %figure(99);
-            %plot(max(results.Promoters{k}.YFP{j}.Measurement), results.Promoters{k}.MeanTrOutput(j), 'o'); hold on;
-            Y(count) = max(results.Promoters{k}.YFP{j}.Measurement);
-            count = count + 1;
+                %figure(99);
+                %plot(max(results.Promoters{k}.YFP{j}.Measurement), results.Promoters{k}.MeanTrOutput(j), 'o'); hold on;
+                Y(count) = max(results.Promoters{k}.YFP{j}.Measurement);
+                count = count + 1;
             end
             
         end
@@ -76,16 +73,21 @@ for u=1:30
         
         
         if sum(results.Promoters{k}.Valid) < actThreshold
-           continue; 
+            continue;
         end
         
         
         if (plIdx>1)
-           markerType = 'o';
+            markerType = 'o';
+            noiseResults{i}.cv2Mat(concIdx, plIdx-1) = (std(transcrOutput)/mean(transcrOutput))^2;
+            noiseResults{i}.meanMat(concIdx, plIdx-1) = mean(transcrOutput);
+            
         else
-           markerType = 'v'; 
+            markerType = 'v';
         end
-
+        
+        
+        
         figure(1);
         subplot(3, length(selPromoters), i);
         p = loglog(mean(transcrOutput), (std(transcrOutput)/mean(transcrOutput))^2, markerType); hold on;
@@ -108,7 +110,7 @@ for u=1:30
         ylabel('CV2');
         title(selPromoters{i});
         %xlim([1, 1000]);
-
+        
         subplot(3, length(selPromoters), 2*length(selPromoters) + i);
         p = loglog(mean(proteinOutput), (std(proteinOutput)/mean(proteinOutput))^2, markerType); hold on;
         set(p, 'Color', colVec(concIdx, :));
@@ -121,18 +123,34 @@ for u=1:30
         drawnow;
     end
 end
-% 
-% for i=1:length(selPromoters)    
+
+close all;
+figure;
+subplot(2,2,1);
+bar(noiseResults{1}.cv2Mat(:, 1));
+
+subplot(2, 2, 2);
+bar(noiseResults{1}.cv2Mat(:, end));
+
+
+subplot(2,2,3);
+bar(noiseResults{1}.meanMat(:, 1));
+
+subplot(2, 2, 4);
+bar(noiseResults{1}.meanMat(:, end));
+
+%
+% for i=1:length(selPromoters)
 %     subplot(2, length(selPromoters), i);
 %     xLims = xlim;
 %     muVec = linspace(xLims(1), xLims(2), 100);
 %     plot(muVec, 1./sqrt(muVec));
-%     
-%     
+%
+%
 %     subplot(2, length(selPromoters), length(selPromoters) + i);
 %     xLims = xlim;
 %     muVec = linspace(xLims(1), xLims(2), 100);
 %     plot(muVec, 1./sqrt(muVec));
 %     drawnow;
 % end
-% 
+%

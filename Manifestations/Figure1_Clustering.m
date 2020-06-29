@@ -10,7 +10,6 @@ load ../StateReconstruction/results/PromoterFeatures.mat;
 [promoters, concentrations, numPulses, durations, intervals] = GetDataParameters(dataB);
 
 durations = durations(durations>5);
-
 %durations = 50;
 
 TotMat = [];
@@ -50,18 +49,22 @@ for i=1:length(promVec)
    promNames{i} = [promVec{i} ' (' num2str(MSN2Induction) '% Msn2)'];
 end
 
-% group normalization
+rowCount = 1;
+PermMat = zeros(length(featureNames), length(featureNames));
+
 for k=1:length(features)
-    featureIdx = startsWith(featureNames, features{k});
-    vals = TotMat(:, featureIdx);
-    vals = zscore(vals);
-    TotMat(:, featureIdx) = vals;
+    featureIdx = find(startsWith(featureNames, features{k}));
+    
+    for l=1:length(featureIdx)
+       PermMat(rowCount, featureIdx(l)) = 1;
+       featureNamesPerm{rowCount} = featureNames{featureIdx(l)};
+       rowCount = rowCount + 1;
+    end
 end
 
-%TotMat = zscore(TotMat, [], 1);
-%[loadings, scores] = pca(TotMat, 'Centered', false);
+TotMatPerm = (PermMat*TotMat')';
 
-cg = clustergram(TotMat, 'Cluster', 'All', 'Standardize', 'none');
-set(cg, 'ColumnLabels', featureNames);
+cg = clustergram(TotMatPerm, 'Cluster', 'Col', 'Standardize', 'col');
+set(cg, 'ColumnLabels', featureNamesPerm);
 set(cg, 'RowLabels', promNames);
 

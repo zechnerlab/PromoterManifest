@@ -11,14 +11,14 @@ maxCond = 8;
 
 legendStr = {};
 cVec = [100, 275, 690, 3000];
-plVec = [10, 20, 30, 40, 50];
+plVec = [50];
 
 conditions = GenerateConditions();
 
 colVec = 'rgbkcmy';
 
 
-k=find(strcmp(promoters, 'SIP18'));
+k=find(strcmp(promoters, 'RTN2'));
 
 for u=1:20
     
@@ -29,6 +29,7 @@ for u=1:20
     plIdx = floor(conditions{u}.PulseParameters(2)/10);
     
     responders = and(results.Promoters{k}.PActivated>0.99, results.Promoters{k}.Valid);
+    responders = logical(results.Promoters{k}.Valid);
     
     tauS = results.Promoters{k}.MeanTauS(responders);
     tauA = results.Promoters{k}.MeanTauA(responders);
