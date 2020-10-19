@@ -1,16 +1,8 @@
+
 clear;
 close all;
 
-warning off;
-
 addpath('../Common');
-addpath('../Common/Statistics/');
-addpath('../Common/StochChemKin/');
-addpath('../Common/Models/');
-addpath('../Common/ODEs/dopri');
-addpath('../Common/ODEs/');
-addpath('../Common/');
-addpath('../Common/SpecialFunctions/');
 addpath('../Data');
 addpath('../Data/MSN2');
 addpath('../');
@@ -27,7 +19,6 @@ conditionsAll = GenerateConditions();
 semFactor = 2;
 
 promoters = {'DCS2', 'HXK1', 'SIP18', 'ALD3','DDR2', 'RTN2', 'TKL2', 'pSIP18_mut6', 'pSIP18_mut21'};
-%promoters = {'DCS2'};
 
 counter = 0;
 maxCond = 8;
@@ -37,16 +28,13 @@ cVec = [100, 275, 690, 3000];
 
 conditions = conditionsAll;
 
-colVec = 'rgbkcmy';
-
-
-figWidth= 300;
-figHeight = 3000;
-%fig = figure('rend','painters','pos',[1000 1000 figWidth figHeight]);
-
+%Specify index of promoter to show (1=DCS2, 9=SIP18 D6);
 kIdx = [1, 9];
 
+%Only plot the repeated pulse conditions with different intervals
 cIdx = 20+[3, 7, 8, 9, 10];
+
+colVec = 'rgbkcmy';
 
 for i=1:length(kIdx)
     k = kIdx(i);
@@ -58,8 +46,7 @@ for i=1:length(kIdx)
         for l=1:length(resultsNames)
             resultsName = resultsNames{l};
             results = load(['../StateReconstruction/' resultsName '/StateReconstruction_' conditions{u}.Name '.mat'], 'Promoters');
-            t = results.Promoters{k}.tGrid;
-            
+
             numCells = size(results.Promoters{k}.P2, 1);
             
             trRateMat(l, :) = mean(results.Promoters{k}.MeanTr(logical(results.Promoters{k}.Valid), :), 1);
@@ -81,8 +68,7 @@ for i=1:length(kIdx)
         xlabel('Time in min');
         ylabel('\lambda(t)');
         xlim([0, 100]);
-        ylim([-0.01, 0.08])
-        title([promoters{k} '(' num2str(conditions{u}.Name) ')']);
+        title([promoters{k} '(' num2str(conditions{u}.Name) ')'], 'interpreter', 'none');
         drawnow;
         
         if (i==1)
@@ -94,10 +80,8 @@ for i=1:length(kIdx)
             ylabel('Msn2 level');
         end
         
-        
         drawnow;
         
     end
 end
-
 
