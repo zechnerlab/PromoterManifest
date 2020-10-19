@@ -106,7 +106,6 @@ for i=1:length(selPromoters)
 
         pulseLength = conditions{u}.PulseParameters(2);
 
-        
         results = load(['../StateReconstruction/' resultsName '/StateReconstruction_' conditions{u}.Name '.mat'], 'Promoters');
 
         validIdx = results.Promoters{k}.Valid;
