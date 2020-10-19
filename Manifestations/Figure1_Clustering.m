@@ -1,5 +1,5 @@
 
-clear all;
+clear;
 close all;
 
 addpath('../StateReconstruction/');
@@ -23,7 +23,7 @@ for k=1:length(durations)
     TotMat = [TotMat, Mat];
     
     for i=1:length(features)
-        featureNames{end+1} = [features{i} ':' num2str(durations(k))]; 
+        featureNames{end+1} = [features{i} ':' num2str(durations(k)) 'min']; 
     end
     
 end

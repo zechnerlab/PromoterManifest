@@ -1,7 +1,6 @@
-clear all;
+clear;
 close all;
 
-addpath('results/');
 addpath('../StateReconstruction');
 addpath('../Common/');
 addpath('../Data/Msn2');

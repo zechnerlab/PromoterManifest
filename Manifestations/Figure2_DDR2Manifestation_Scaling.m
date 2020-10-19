@@ -1,7 +1,6 @@
-clear all;
+clear;
 close all;
 
-addpath('results/');
 addpath('../StateReconstruction');
 addpath('../Common/');
 addpath('../Data/Msn2');
@@ -27,7 +26,6 @@ feature3 = 'meanTauA';
 feature4 = 'maxTr';
 feature5 = 'pActivate';
 
-
 semFactor = 2;
 
 p = zeros(length(concentrations), 1);
@@ -48,7 +46,7 @@ for k=1:length(concentrations)
     data2 = data2/60;
     data3 = data3/60;
     data4 = data4;
-    data5 = data5
+    data5 = data5;
     
     data2sem = data2sem/60;
     data3sem = data3sem/60;

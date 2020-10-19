@@ -1,4 +1,5 @@
-clear all;
+
+clear;
 close all;
 
 addpath('../StateReconstruction');
@@ -17,7 +18,7 @@ resultsNames{4} = 'results_4';
 resultsNames{5} = 'results_5';
 
 promoters = {'DCS2', 'HXK1', 'SIP18', 'ALD3','DDR2', 'RTN2', 'TKL2', 'pSIP18_mut6', 'pSIP18_mut21'};
-promName = 'RTN2';
+promName = 'DDR2';
 
 counter = 0;
 maxCond = 8;
@@ -71,7 +72,6 @@ for u=1:length(conditions)
     plot(t(validTimeIdx)/60, meanTr(validTimeIdx), 'Color', colVec(plIdx, :));
     xlabel('Time in min');
     ylabel('\lambda(t)');
-    %xlim([0, 100]);
     title([promoters{k} '(' num2str(conditions{u}.Concentration) 'nM)']);
 
     drawnow;
