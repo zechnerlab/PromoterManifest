@@ -75,7 +75,7 @@ for l=1:length(selPromoters)
     p = errorbar(concVecPercent, data2, data2sem*semFactor, 'ro'); hold on;
     set(p, 'MarkerFaceColor', 'r');
     set(p, 'MarkerEdgeColor', 'r');
-    ylabel('beta');
+    ylabel('k');
     %ylim([0, 0.6]);
     xlim([0, 125]);
 end
@@ -111,9 +111,7 @@ for i=1:length(selPromoters)
 
         validIdx = results.Promoters{k}.Valid;
         idx = find(validIdx);
-       
-        results.Promoters{k}.Model.Z(2:3)
-        
+
         [~, maxZIdx] = min(results.Promoters{k}.Model.Z(2:3));
         maxZIdx = maxZIdx + 1;
         meanTau = sum(results.Promoters{k}.MeanTauState(idx, [2, 3]), 2);

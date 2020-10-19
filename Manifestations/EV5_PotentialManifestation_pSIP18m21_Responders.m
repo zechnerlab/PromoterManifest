@@ -59,7 +59,7 @@ for k=1:length(concentrations)
     set(p, 'MarkerEdgeColor', 'r');
     xlim([0, 60]);
     title(num2str(concentrations(k)));
-    ylabel('Time activet');
+    ylabel('Time active');
     xlabel('Duration');
     
     subplot(2, length(concentrations), k + length(concentrations));

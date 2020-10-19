@@ -47,7 +47,7 @@ activeState = find(Z>0.2*maxZ);
 
 eIdx = 8;
 extrSigmaSquared = 0.02^2;
-extrMean = 1;%c(eIdx);
+extrMean = 1;
 extrCV = sqrt(extrSigmaSquared) / extrMean;
 a = 1/extrCV^2;
 b = a / extrMean;
@@ -63,10 +63,7 @@ for k=1:numCells
     cTmp(eIdx) = c(eIdx)*gamrnd(a, 1/b);
     
     [x, t] = SimulateSSA_TV(X0, cTmp, Pre, Post, 2000000, T, 1, TFInputParams, [0, TFInputParams.inputTimes, T], 0);
-    
-    %plot(t, x);
-    
-    %[x, t] = SimulateSSA(X0, cTmp, Pre, Post, 100000, 0, T);
+
     Xs = SampleCTMPPathGrid(x, t, measureGrid);
     
     measureIdx = 4;

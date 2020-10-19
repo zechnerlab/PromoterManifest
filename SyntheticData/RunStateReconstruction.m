@@ -1,3 +1,5 @@
+%Runs trajectory inference using synthetic data.
+
 clear;
 close all;
 

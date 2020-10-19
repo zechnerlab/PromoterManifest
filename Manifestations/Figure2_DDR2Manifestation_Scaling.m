@@ -116,13 +116,11 @@ for k=1:length(concentrations)
     
     p = bar(durations, data5, 0.7); hold on;
     
-%    binofit(numResponders, numCells);
     set(p, 'FaceColor', [0.6, 0.6, 0.8]);
-    %p = errorbar(durations, data4, data4sem*semFactor, 'ro'); hold on;
-    %set(p, 'MarkerFaceColor', 'r');
-    %set(p, 'MarkerEdgeColor', 'r');
     ylim([0, 1]);
     xlim([0, 60]);
+    ylabel('% responders');
+    xlabel('Duration');
     
     subplot(2, length(concentrations), k + length(concentrations));
     
@@ -133,7 +131,8 @@ for k=1:length(concentrations)
     set(p, 'MarkerEdgeColor', 'r');
     ylim([0, 0.6]);
     xlim([0, 60]);
+    ylabel('Max. Transcr.');
+    xlabel('Duration');
     
-    legendStr{k} = num2str(concentrations(k));
 end
 

@@ -16,7 +16,7 @@ In the directory "Tutorial" we provide simple tutorial-like example code to plot
 2) PlotTemporalReconstructions.m this file plots the temporal reconstructions of promoter state probabilities and transcription rates as a function of time for a single condition and promoter. The results show population averages and standard errors (when applicable).
 
 # Reproducing manifestation figures
-All manifestations reported in Hansen&Zechner, MSB (2020) can be reproduced using the scripts in the subfolder ‘Manifestations’. The naming of the scripts contain the figure numbers in which they are shown. Results correspond to averages over 5 independent, complete runs of the analysis pipeline. The calibrated models and state inference results can be found in the “ModelCalibration” and “StateReconstruction” folders, respectively. The subfolders containing the individual runs are named ‘results_1’, … ‘results_5’.
+All manifestations reported in Hansen&Zechner can be reproduced using the scripts in the subfolder ‘Manifestations’. The naming of the scripts contain the figure numbers in which they are shown. Results correspond to averages over 5 independent, complete runs of the analysis pipeline. The calibrated models and state inference results can be found in the “ModelCalibration” and “StateReconstruction” folders, respectively. The subfolders containing the individual runs are named ‘results_1’, … ‘results_5’.
 
 # Performing model calibration and state reconstruction
 To perform a full analysis run, a few scripts should be performed in the following order:

@@ -1,3 +1,6 @@
+%Analyze trajectory inference using synthetic data. Estimated values of a
+%few transcriptional features are plotted against the ground truth.
+
 clear;
 close all;
 

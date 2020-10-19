@@ -56,7 +56,6 @@ for k=1:length(concentrations)
     
     p = bar(durations, data1, 0.7); hold on;
     
-    %binofit(numResponders, numCells);
     set(p, 'FaceColor', [0.6, 0.6, 0.8]);
     p = errorbar(durations, data1, data1sem*semFactor, 'ro'); hold on;
     set(p, 'MarkerFaceColor', 'r');
@@ -74,7 +73,6 @@ for k=1:length(concentrations)
     p = errorbar(durations, data2, data2sem*semFactor, 'ro'); hold on;
     set(p, 'MarkerFaceColor', 'r');
     set(p, 'MarkerEdgeColor', 'r');
-    %ylim([0, 0.15]);
     xlim([0, 60]);
     ylim([0, 0.15]);
     ylabel('Max Transcr.');
