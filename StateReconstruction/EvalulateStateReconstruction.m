@@ -4,13 +4,6 @@ close all;
 warning off;
 
 addpath('../Common');
-addpath('../Common/Statistics/');
-addpath('../Common/StochChemKin/');
-addpath('../Common/Models/');
-addpath('../Common/ODEs/dopri');
-addpath('../Common/ODEs/');
-addpath('../Common/');
-addpath('../Common/SpecialFunctions/');
 addpath('../Data');
 addpath('../Data/MSN2');
 addpath('../');

@@ -1,14 +1,15 @@
+%This script performs the single-cell trajectory inference for all
+%promoters and conditions using the previously calibrated models stored in
+%'../ModelCalibration/results/'. The reconstructions are partly processed on the
+%fly because they would take up too much memory otherwise
+%(function 'ProcessCellReconstruction'). The cell reconstructions are then
+%stored in the folder 'results'. Note that this script takes around 15-20
+%hours to complete on a 40-core shared memory system. 
+
 clear;
 close all;
 
 addpath('../Common');
-addpath('../Common/Statistics/');
-addpath('../Common/StochChemKin/');
-addpath('../Common/Models/');
-addpath('../Common/ODEs/dopri');
-addpath('../Common/ODEs/');
-addpath('../Common/');
-addpath('../Common/SpecialFunctions/');
 addpath('../Data');
 addpath('../Data/MSN2');
 addpath('../');

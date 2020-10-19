@@ -18,7 +18,7 @@ X_113 = M(10);
 X_123 = M(11);
 X_133 = M(12);
 X_1133 = M(13);
-Z = model.Z;%GetPieceWiseConstantInput(t, model.TranscriptionRateSequence);
+Z = model.Z;
 if (update==0)
 	dM(1) = Z - X_1*c2;
 	dM(2) = X_13*c3 - X_2*c4;

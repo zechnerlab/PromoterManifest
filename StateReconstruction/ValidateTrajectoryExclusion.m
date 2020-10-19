@@ -13,14 +13,14 @@ plVec = [10, 20, 30, 40, 50];
 conditions = GenerateConditions();
 
 
-
+resultsName = 'results_2';
 
 rows = 5;
 cols = 6;
 
 stdFactor = 1;
 
-for u=1:30
+for u=1:length(conditions)
     
     
     for k=1:length(promoters)
@@ -29,7 +29,7 @@ for u=1:30
         
         totName = sprintf('%s_%s', promName, conditions{u}.Name);
         YFP = load(['../Data/MSN2/' promName '/' totName '_YFP.mat']);
-        res = load(['../StateReconstruction/results/StateReconstruction_' conditions{u}.Name '.mat'], 'Promoters');
+        res = load(['../StateReconstruction/' resultsName '/StateReconstruction_' conditions{u}.Name '.mat'], 'Promoters');
         
         concIdx = find(conditions{u}.Concentration == cVec);
         plIdx = floor(conditions{u}.PulseParameters(2)/10);
@@ -146,9 +146,16 @@ end
 
 figure;
 subplot(1,3,1);
-semilogx(maxYFP', validRatio', 'b.');
-subplot(1,3,2);
-semilogx(maxYFP', errorMean', 'b.');
-subplot(1,3,3);
-semilogx(maxYFP', errorVar', 'b.');
+loglog(maxYFP', 1 - validRatio', 'b.');
+ylabel('% removed trajectories');
+xlabel('YFP_{max}');
 
+subplot(1,3,2);
+loglog(maxYFP', errorMean', 'b.');
+ylabel('% error (mean)');
+xlabel('YFP_{max}');
+
+subplot(1,3,3);
+loglog(maxYFP', errorVar', 'b.');
+ylabel('% error (variance)');
+xlabel('YFP_{max}');
