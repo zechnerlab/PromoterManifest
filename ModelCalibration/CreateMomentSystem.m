@@ -1,4 +1,7 @@
-clear all;
+%This script automatically generates first and second order moments for the
+%three-state gene expression model.
+
+clear;
 close all;
 
 addpath('../Common');
@@ -10,16 +13,10 @@ generate = 1;
 
 [Pre, Post, c, X0] = CreateSystemForFullMoments();
 
-%X0(1) = 0;
-%X0(2) = 0;
-%X0(3) = 0;
-
-
 modelIn.Pre = Pre;
 modelIn.Post = Post;
 modelIn.c = c;
 modelIn.X0 = X0;
-%modelIn.InputParams.inputTransitionIdx = [1, 2];
 modelIn.ObservedSpeciesIdx = 4;
 
 if (generate == 1)

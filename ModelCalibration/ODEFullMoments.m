@@ -1,3 +1,5 @@
+%this file corresponds to the moment equations needed to calculate mean and
+%variance of YFP for a given set of model parameters
 function [dM] = ODEFullMoments(t, M, model)
 
 dM = M;

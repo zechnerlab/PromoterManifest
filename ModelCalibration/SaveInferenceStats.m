@@ -21,8 +21,6 @@ conditions = GenerateConditions();
 conditions = GetConditions(conditions, [50], concVec);
 
 promoters = {'DCS2', 'HXK1', 'SIP18', 'ALD3','DDR2', 'RTN2', 'TKL2', 'pSIP18_mut6', 'pSIP18_mut21'};
-%promoters = {'TKL2'};
-%promoters={'ALD3'};
 
 for k=1:length(promoters)
     for i=1:length(conditions)

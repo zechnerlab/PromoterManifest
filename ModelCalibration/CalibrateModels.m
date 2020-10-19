@@ -1,16 +1,18 @@
+%This file calibrates models for each promoter and conditions separately.
+%Only the promoter paramters (switching rates, transcription rates) are
+%allwed to vary between conditions. The remaining parameters are estimated
+%from the 50min-pulse 100% Msn2 condition. The results are stored in the
+%folder 'results'. Once the calibration is finished, the function
+%'SaaveInferenceStats.m' is executed, which calculates the maximal transcription
+%rate for from the 50min pulse conditions for each promoter respectively.
+%This is used later during state reconstruction to distinguish responding from 
+%non-responding cells. Note that the script takes a few hours to complete on 
+%a 40-core shared memory system.
+
 clear;
 close all;
 
-warning off;
-
 addpath('../Common');
-addpath('../../Common/Statistics/');
-addpath('../../Common/StochChemKin/');
-addpath('../../Common/Models/');
-addpath('../../Common/ODEs/dopri');
-addpath('../../Common/ODEs/');
-addpath('../../Common/');
-addpath('../../Common/SpecialFunctions/');
 addpath('../Data');
 addpath('../Data/MSN2');
 
@@ -35,6 +37,7 @@ Results = cell(length(conditions)*length(promoters), 1);
 %mRNA degradation, translation and protein degr
 firstModel = cell(length(promoters), length(concVec));
 
+%Number of samples used for MCMC sampling
 numSamples = 20000;
  
 config = struct;
