@@ -1,3 +1,6 @@
+%Simulates an example of a complex, 4-state promoter, which
+%exhibits distinct manifesations under different input contexts.
+
 clear;
 close all;
 
@@ -26,7 +29,7 @@ conditions = GenerateConditions();
 numRows = 5;
 numCols = 6;
 
-for l=1:30
+for l=1:length(conditions)
     condition = conditions{l};
     
     TFData = load(['../Data/Msn2/ALD3/ALD3_' condition.Name '_MSN2.mat']);
@@ -72,8 +75,7 @@ for l=1:30
     rates{5}.Idx = [4, 1];
     params.k = 0.01;
     rates{5}.Params = params;
-    
-    
+
     config.rates = rates;
     
     P0 = [1; 0; 0; 0];
@@ -81,49 +83,14 @@ for l=1:30
     
     [~, X] = ode15s(@PromoterODE, measureGrid, [P0(:); M0(:)], {}, config);
     P = X(:, 1:config.numPromoterStates);
-    M = X(:, config.numPromoterStates+1:end);
-    
-    condM = M(:, 1:config.numPromoterStates);
-    condS = M(:, config.numPromoterStates+1:end);
-    
-    
-    meanTr = config.Z*P';
-    varTr = config.Z.^2*P' - meanTr.^2;
-    
-    
-    meanR = sum(condM, 2);
-    varR = sum(condS, 2) - meanR.^2;
-    
-    
-    transcrOutput(l) = sum(meanTr(1:end-1).*dT);
-    
-    meanTrI = config.Z.*P;
-    transcrOutputI(l, :) = sum(meanTrI(1:end-1, :).*dT');
-    
-    if (condition.PulseParameters(1) == 1)
-       concIdx = find(concVec == condition.Concentration);
-       plIdx = find(plVec == condition.PulseParameters(2));
-       PulseTr(concIdx, plIdx) = meanR(end); 
-       PulseTrVar(concIdx, plIdx) = varR(end);
-    end
     
     QNet = CalculateFlows(P, measureGrid, config);
     QNet = QNet - diag(diag(QNet));
     
-%     for u=1:config.numPromoterStates
-%        QNet(u, u) = nan; 
-%     end
-    
-    %plot(measureGrid, config.Z*P'); hold on;
-    
-    %plot(measureGrid, meanR, measureGrid, meanR - sqrt(varR), measureGrid, meanR + sqrt(varR)); hold on;
     subplot(numRows, numCols, l);
     heatmap(QNet, 'CellLabelColor', 'none', 'GridVisible', 'off', 'ColorbarVisible', 'off');
-    title(condition.Name);
-    
-    %image(QNet);
-end
+    title(condition.Name, 'interpreter', 'none');
 
-%loglog(PulseTr, PulseTrVar./PulseTr.^2, 'o');
+end
 
 
