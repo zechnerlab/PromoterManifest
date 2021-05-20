@@ -28,7 +28,7 @@ To perform a full analysis run, a few scripts should be performed in the followi
 # Additional analyses
 1. ValidateModelCalibration.m: Cross-validation of the calibrated models based on first and second moments.
 2. ValidateStateReconstruction.m: Cross-validation of the trajectory inference results based on first and second moments.
-3. ValidateTrajectoryExcludion.m: Certain trajectories can cause the SMC scheme to become unstable, which are thus excluded. This script compares the moments of gene expression responses in the presence and absence of trajectory exclusion for each individual promoter and condition.
+3. ValidateTrajectoryExclusion.m: Certain trajectories can cause the SMC scheme to become unstable, which are thus excluded. This script compares the moments of gene expression responses in the presence and absence of trajectory exclusion for each individual promoter and condition.
 
 # External libraries / code
 Our repository relies on the following freely available scripts:
