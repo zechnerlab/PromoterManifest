@@ -1,5 +1,5 @@
 # PromoterManifest
-This repository provides all Matlab code used for "Promoters adopt distinct dynamic manifestations depending on transcription factor context" by AS Hansen and C Zechner (https://www.biorxiv.org/content/10.1101/650762v2).
+This repository provides all Matlab code used for "Promoters adopt distinct dynamic manifestations depending on transcription factor context" by AS Hansen and C Zechner, Mol Syst Biol (2021).
 
 # Folder structure
 -Common: contains general helper functions and code.
